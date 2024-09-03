@@ -10,28 +10,28 @@ def draw_dotted_line(self, img, lm_coord, start, end, line_color):
 
         return img
 
-def get_landmark_array(pose_landmark, key, frame_width, frame_height):
+def get_landmark_array(pose_landmark, key, img_width, img_height):
 
-    denorm_x = int(pose_landmark[key].x * frame_width)
-    denorm_y = int(pose_landmark[key].y * frame_height)
+    denorm_x = int(pose_landmark[key].x * img_width)
+    denorm_y = int(pose_landmark[key].y * img_height)
 
     return np.array([denorm_x, denorm_y])
 
-def get_landmark_features(kp_results, dict_features, feature, frame_width, frame_height):
+def get_landmark_features(kp_results, dict_features, leftORright, img_width, img_height):
 
-    if feature == 'nose':
-        return get_landmark_array(kp_results, dict_features[feature], frame_width, frame_height)
+    if leftORright == 'nose':
+        return get_landmark_array(kp_results, dict_features[leftORright], img_width, img_height)
 
-    elif feature == 'left' or 'right':
-        shldr_coord = get_landmark_array(kp_results, dict_features[feature]['shoulder'], frame_width, frame_height)
-        elbow_coord   = get_landmark_array(kp_results, dict_features[feature]['elbow'], frame_width, frame_height)
-        wrist_coord   = get_landmark_array(kp_results, dict_features[feature]['wrist'], frame_width, frame_height)
-        hip_coord   = get_landmark_array(kp_results, dict_features[feature]['hip'], frame_width, frame_height)
-        knee_coord   = get_landmark_array(kp_results, dict_features[feature]['knee'], frame_width, frame_height)
-        ankle_coord   = get_landmark_array(kp_results, dict_features[feature]['ankle'], frame_width, frame_height)
-        foot_coord   = get_landmark_array(kp_results, dict_features[feature]['foot'], frame_width, frame_height)
+    elif leftORright == 'left' or leftORright == 'right':
+        shoulder_coord = get_landmark_array(kp_results, dict_features[leftORright]['shoulder'], img_width, img_height)
+        elbow_coord   = get_landmark_array(kp_results, dict_features[leftORright]['elbow'], img_width, img_height)
+        wrist_coord   = get_landmark_array(kp_results, dict_features[leftORright]['wrist'], img_width, img_height)
+        hip_coord   = get_landmark_array(kp_results, dict_features[leftORright]['hip'], img_width, img_height)
+        knee_coord   = get_landmark_array(kp_results, dict_features[leftORright]['knee'], img_width, img_height)
+        ankle_coord   = get_landmark_array(kp_results, dict_features[leftORright]['ankle'], img_width, img_height)
+        foot_coord   = get_landmark_array(kp_results, dict_features[leftORright]['foot'], img_width, img_height)
 
-        return shldr_coord, elbow_coord, wrist_coord, hip_coord, knee_coord, ankle_coord, foot_coord
+        return shoulder_coord, elbow_coord, wrist_coord, hip_coord, knee_coord, ankle_coord, foot_coord
 
     else:
         raise ValueError("feature needs to be either 'nose', 'left' or 'right")
