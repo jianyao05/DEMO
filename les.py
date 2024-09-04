@@ -31,6 +31,21 @@ while True:
                     color=(255,255,255), thickness=3,)
         detector.draw_dotted_line(img, np.array(lmList[11][1:]), start=(lmList[11][2]) - 40, end=(lmList[11][2]) + 40,
                          line_color=(0, 0, 255))
+        knee_text_coord_x = lmList[11][1] + 45
+        cv2.putText(img, str(int(angle)), (knee_text_coord_x, lmList[11][2]+45), cv2.FONT_HERSHEY_PLAIN, 2,
+                    (0, 255,255), 2)
+
+
+
+
+        ### joinin of landmarks
+        cv2.line(img, lmList[23][1:], lmList[11][1:], (102, 204, 255), 4, cv2.LINE_AA)
+        cv2.line(img, lmList[11][1:], lmList[13][1:], (102, 204, 255), 4, cv2.LINE_AA)
+        cv2.circle(img, lmList[11][1:], 7, (0, 0, 255), -1, cv2.LINE_AA)
+        cv2.circle(img, lmList[13][1:], 7, (0, 0, 255), -1, cv2.LINE_AA)
+        cv2.circle(img, lmList[23][1:], 7, (0, 0, 255), -1, cv2.LINE_AA)
+
+
 
     # fps
     cTime = time.time()
