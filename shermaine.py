@@ -29,4 +29,27 @@ self._update_state_sequence(current_state)
 
 # -------------------------------------- COMPUTE COUNTERS --------------------------------------
 '''
+import cv2
+import mediapipe as mp
+import numpy as np
+
+
+
+
+cap = cv2.VideoCapture(0)
+
+while True:
+
+    success, img = cap.read()
+
+    cv2.imshow('Image', img)
+    cv2.waitKey(1)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()  # Release the video capture object
+cv2.destroyAllWindows()  # Close all OpenCV windows
+
+
+
 

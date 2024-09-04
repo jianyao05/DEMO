@@ -21,9 +21,16 @@ while True:
     #print(lmList)
     if len(lmList) != 0:
         # left lunges
-        angle = detector.findAngle(img, 11, 11, 13)
+        reference = lmList[13][1:]
+        angle = detector.findAngle(11, 13, reference)
         x, y = lmList[11][1:]
-        detector.draw_dotted_line(img, (x, y), y - 30, y + 40, (0, 255, 0))
+        print(angle)
+        multiplier = -1
+        cv2.ellipse(img, np.array(lmList[11][1:]), (30, 30),
+                    angle=0, startAngle=90, endAngle=90 + multiplier * angle,
+                    color=(255,255,255), thickness=3,)
+        detector.draw_dotted_line(img, np.array(lmList[11][1:]), start=(lmList[11][2]) - 40, end=(lmList[11][2]) + 40,
+                         line_color=(0, 0, 255))
 
     # fps
     cTime = time.time()
