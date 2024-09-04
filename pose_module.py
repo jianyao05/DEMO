@@ -85,11 +85,12 @@ class poseDetector():
         angle = self.Angle(reference_point, feature1, feature2)
         print('angle is: ', angle)
 
-
-
-
-
-
+        ### joining of landmarks
+        cv2.line(img, lmList[23][1:], lmList[11][1:], (102, 204, 255), 4, cv2.LINE_AA)
+        cv2.line(img, lmList[11][1:], lmList[13][1:], (102, 204, 255), 4, cv2.LINE_AA)
+        cv2.circle(img, lmList[11][1:], 7, (0, 0, 255), -1, cv2.LINE_AA)
+        cv2.circle(img, lmList[13][1:], 7, (0, 0, 255), -1, cv2.LINE_AA)
+        cv2.circle(img, lmList[23][1:], 7, (0, 0, 255), -1, cv2.LINE_AA)
 
 '''    
        
