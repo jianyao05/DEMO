@@ -62,7 +62,7 @@ class poseDetector():
         return img
 
     def Angle(self, img, feature1, feature2):
-        a = np.array([self.lmList[feature1][1], 1000])
+        a = np.array([100, self.lmList[feature1][2]])
         b = np.array(self.lmList[feature1][1:])
         c = np.array(self.lmList[feature2][1:])
 
@@ -73,8 +73,8 @@ class poseDetector():
         ###
 
         multiplier = -1
-        cv2.ellipse(img, np.array(self.lmList[feature1][1:]), (30, 30), angle=0, startAngle=90,
-                    endAngle=90 + multiplier * degree, color=(255, 255, 255), thickness=3, )
+        cv2.ellipse(img, np.array(self.lmList[feature1][1:]), (30, 30), angle=0, startAngle=180,
+                    endAngle=180-multiplier * degree, color=(255, 255, 255), thickness=3, )
 
         # Draw dotted lines - first vertical, then horizontal
         self.draw_dotted_line(img, b, start=(self.lmList[feature1][2]) - 40, end=(self.lmList[feature1][2]) + 40,

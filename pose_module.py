@@ -4,6 +4,7 @@ import time
 import math
 import numpy as np
 
+
 class poseDetector():
 
     def __init__(self, mode=False, smooth=True, detectionCon=0.5, trackCon=0.5):
@@ -71,14 +72,10 @@ class poseDetector():
         ###
 
         multiplier = -1
-        cv2.ellipse(img, np.array(self.lmList[11][1:]), (30, 30),
-                    angle=0, startAngle=90, endAngle=90 + multiplier * degree,
-                    color=(255, 255, 255), thickness=3, )
-        self.draw_dotted_line(img, np.array(self.lmList[11][1:]), start=(self.lmList[11][2]) - 40, end=(self.lmList[11][2]) + 40,
-                              line_color=(0, 0, 255))
-        knee_text_coord_x = self.lmList[11][1] + 45
-        cv2.putText(img, str(int(degree)), (knee_text_coord_x, self.lmList[11][2] + 45), cv2.FONT_HERSHEY_PLAIN, 2,
-                    (0, 255, 255), 2)
+        cv2.ellipse(img, np.array(self.lmList[feature1][1:]), (30, 30), angle=0, startAngle=90, endAngle=90 + multiplier * degree, color=(255, 255, 255), thickness=3, )
+        self.draw_dotted_line(img, np.array(self.lmList[feature1][1:]), start=(self.lmList[feature1][2]) - 40, end=(self.lmList[feature1][2]) + 40, line_color=(0, 0, 255))
+        knee_text_coord_x = self.lmList[feature1][1] + 45
+        cv2.putText(img, str(int(degree)), (knee_text_coord_x, self.lmList[feature1][2] + 45), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 255), 2)
 
 
         cv2.line(img, self.lmList[third_connection][1:], self.lmList[feature1][1:], (102, 204, 255), 4, cv2.LINE_AA)
@@ -114,7 +111,7 @@ class poseDetector():
                 self.list.append(state)
         return self.list
 
-    def counter(self, state):
+    def counter(self, img, state):
         if state == 's1':
             if len(self.list) == 3 and not self.INCORRECT_POSTURE:
                 self.SQUAT_COUNT += 1
@@ -131,6 +128,7 @@ class poseDetector():
             print('squats',self.SQUAT_COUNT)
             print('improper',self.IMPROPER_SQUAT)
 
+        return self.SQUAT_COUNT, self.IMPROPER_SQUAT
 
 
 
