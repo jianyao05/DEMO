@@ -8,12 +8,6 @@ import pose_module as pm
 cap = cv2.VideoCapture(0)
 
 detector = pm.poseDetector()
-count = 0
-dir = 0
-pTime = 0
-
-yuhangsuckballs = 0
-
 
 while True:
 
@@ -24,19 +18,12 @@ while True:
     lmList = detector.findPosition(img, False)
     #print(lmList)
     if len(lmList) != 0:
-        # left lunges
-
-
-        if angle > 100:
-            yuhangsuckballs += 1
-            print('amt of reps', yuhangsuckballs)
-
-    # fps
-    cTime = time.time()
-    fps = 1 / (cTime-pTime)
-    pTime = cTime
-    cv2.putText(img, str(int(fps)), (50, 100), cv2.FONT_HERSHEY_PLAIN, 5, (255, 0, 0), 5)
-
+        angle = detector.Angle(img, 23, 11, 13, )
+        current_state = detector.get_state(angle)
+        print(current_state)
+        detector.update_state_sequence(current_state)
+        print(detector.update_state_sequence(current_state))
+        detector.counter(current_state)
     cv2.imshow('Image', img)
     cv2.waitKey(1)
     if cv2.waitKey(1) & 0xFF == ord('q'):
