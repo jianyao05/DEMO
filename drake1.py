@@ -32,6 +32,7 @@ cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
     ret, frame = cap.read()
+    frame = cv2.resize(frame, (1280, 720))
 
     # Recolor the frame to RGB (required for MediaPipe)
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -66,6 +67,7 @@ while cap.isOpened():
 
         # Draw the pose landmarks on the frame
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+        print(shoulder)
 
     # Display the frame
     cv2.imshow('Angle Detection', frame)

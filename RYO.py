@@ -51,6 +51,7 @@ class poseDetector():
                     cv2.circle(img, (cx, cy), 5, (255, 0, 0), cv2.FILLED)
         return self.lmList
 
+    # ------------------- DRAW DOTTED VERTICAL AND HORIZONTAL LINES --------------
     def draw_dotted_line(self, img, lm_coord, start, end, line_color, direction='vertical'):
         # If the direction is vertical, draw the line vertically, otherwise horizontally
         pix_step = 0
@@ -65,3 +66,23 @@ class poseDetector():
                 cv2.circle(img, (i + pix_step, lm_coord[1]), 2, line_color, -1, lineType=cv2.LINE_AA)
 
         return img
+
+    # ------------------- CALCULATE ANGLES eg. [BELOW SHOULDER, SHOULDER, ELBOW] --------------
+    def calculate_angle(self, point1, point2, point3):
+        # Calculate vectors
+        vector1 = np.array(point1) - np.array(point2)
+        vector2 = np.array(point3) - np.array(point2)
+
+        # Dot product and magnitudes
+        dot_product = np.dot(vector1, vector2)
+        magnitude1 = np.linalg.norm(vector1)
+        magnitude2 = np.linalg.norm(vector2)
+
+        # Angle in radians
+        angle_radians = np.arccos(dot_product / (magnitude1 * magnitude2))
+
+        # Convert to degrees
+        angle_degrees = np.degrees(angle_radians)
+
+        return angle_degrees
+
