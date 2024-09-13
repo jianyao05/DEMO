@@ -24,6 +24,12 @@ while True:
         angle = detector.calculate_angle(point_below_shoulder, shoulder, elbow)
         print(angle)
 
+        # CONNECTING THE KEY JOINTS REGARDING ANGLES
+        cv2.line(img, shoulder[0:2], elbow[0:2], (102, 204, 255), 4, cv2.LINE_AA)
+        cv2.putText(img, str(int(angle)),
+                    (int(elbow[0]), int(elbow[1])),  # Position the text at the elbow joint
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
     cv2.imshow('Image', img)
     cv2.waitKey(1)
 

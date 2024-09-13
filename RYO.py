@@ -86,3 +86,45 @@ class poseDetector():
 
         return angle_degrees
 
+    # ------------------- GET STATE BASED OFF ANGLES AND Z COORDINATES AND X? --------------
+    def get_state(self, angle):
+        state = None
+
+        if 0 <= angle <= 30:
+            state = 1
+        elif 35 <= angle <= 75:
+            state = 2
+        elif 80 <= angle <= 100:
+            state = 3
+        return f"s{state}" if state else None
+
+    def update_state_sequence(self, state):
+        if state == 's2':
+            if (('s3' not in self.list) and (self.list.count('s2')) == 0) or (
+                    ('s3' in self.list) and (self.list.count('s2') == 1)):
+                self.list.append(state)
+                '''If 's3' hasn’t been added yet, only one 's2' can be added.
+                   If 's3' has been added, one more 's2' can be added, but only if it has appeared once before.'''
+        elif state == 's3':
+            if (state not in self.list) and ('s2' in self.list):
+                self.list.append(state)
+        return self.list
+
+    def counter(self, img, state):
+        if state == 's1':
+            if len(self.list) == 3 and not self.INCORRECT_POSTURE:
+                self.SQUAT_COUNT += 1
+
+            elif 's2' in self.list and len(self.list) == 1:
+                self.IMPROPER_SQUAT += 1
+
+
+            elif self.INCORRECT_POSTURE:
+                self.IMPROPER_SQUAT += 1
+
+            self.list = []
+            self.INCORRECT_POSTURE = False
+            print('squats', self.SQUAT_COUNT)
+            print('improper', self.IMPROPER_SQUAT)
+
+        return self.SQUAT_COUNT, self.IMPROPER_SQUAT

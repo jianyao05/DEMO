@@ -71,7 +71,6 @@ class poseDetector():
         if degree > 180.0:
             degree = 360 - degree
         ###
-
         multiplier = -1
         cv2.ellipse(img, np.array(self.lmList[feature1][1:]), (30, 30), angle=0, startAngle=90,
                     endAngle=90 + multiplier * degree, color=(255, 255, 255), thickness=3, )
